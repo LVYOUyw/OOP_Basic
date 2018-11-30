@@ -33,7 +33,6 @@ void Run(Program & program, EvalState & state);
 int main() {
    EvalState state;
    Program program;
-   cout << "Stub implementation of BASIC" << endl;
    while (flag) {
       try {
          processLine(getLine(), program, state);

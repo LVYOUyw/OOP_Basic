@@ -60,26 +60,30 @@ int SequentialStatement::execute(EvalState &state)
         if (line.find("INPUT") != line.npos)
         {
             pos = line.find("INPUT");
-            string val = "";
-            while (true)
-            {
-            
+	        int val = 0;
+			int sig = 1;
+			while (true)
+			{
+	
 				bool jud = true;
-                cout << " ? " ;
-                char ch = getchar();
-                while (ch != '\n')
-                {
-                    val += ch;
-					if (ch > '9' || ch < '0') jud = false;
-                    ch = getchar();
-                }
+			
+				cout << " ? " ;
+				char ch = getchar();
+				if (ch == '-') sig = -1, ch = getchar();
+				while (ch != '\n')
+				{
+					if (ch >= '0' && ch <= '9') val = val * 10 + ch - '0'; 
+					else jud = 0;
+					ch = getchar();
+				}
 				if (jud) break;
-				val = "";
+				val = 0;
+				sig = 1;
 				cout << "INVALID NUMBER" << endl;
-            }
-			stringToInteger(val);
-            trans = line.substr(pos + 6, len - pos - 6) + "=" + val;
-        }
+			}
+	        trans = line.substr(pos + 6, len - pos - 6);
+	        state.setValue(trans, val * sig);
+        } 
         else if (line.find("PRINT") != line.npos)
         {
             flag = 1;
@@ -120,25 +124,30 @@ int DirectlyExecutedStatement::execute(EvalState &state)
     if (line.find("INPUT") != line.npos)
     {
         pos = line.find("INPUT");
-        string val = "";
+        int val = 0;
+		int sig = 1;
 		while (true)
 		{
 
 			bool jud = true;
+			
 			cout << " ? " ;
 			char ch = getchar();
+			if (ch == '-') sig = -1, ch = getchar();
 			while (ch != '\n')
 			{
-				val += ch;
-				if (ch > '9' || ch < '0') jud = false;
+				if (ch >= '0' && ch <= '9') val = val * 10 + ch - '0';
+				else jud = 0;
 				ch = getchar();
 			}
 			if (jud) break;
-			val = "";
+			val = 0;
+			sig = 1;
 			cout << "INVALID NUMBER" << endl;
 		}
-		stringToInteger(val);
-        trans = line.substr(pos + 6, len - pos - 6) + "=" + val;
+        trans = line.substr(pos + 6, len - pos - 6);
+        state.setValue(trans, val * sig);
+        
     }
     else if (line.find("PRINT") != line.npos)
     {
@@ -153,6 +162,7 @@ int DirectlyExecutedStatement::execute(EvalState &state)
     }
     TokenScanner scanner;
     scanner.ignoreWhitespace();
+	scanner.scanNumbers();
     scanner.setInput(trans);
     exp = parseExp(scanner);
     if (flag) cout << exp -> eval(state) << endl;

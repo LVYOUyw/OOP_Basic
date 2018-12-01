@@ -70,7 +70,7 @@ int SequentialStatement::execute(EvalState &state)
                 while (ch != '\n')
                 {
                     val += ch;
-					if (ch > '9' || ch < '0') jud = false, cout << "---" << ch << "---" << endl;
+					if (ch > '9' || ch < '0') jud = false;
                     ch = getchar();
                 }
 				if (jud) break;
@@ -130,7 +130,7 @@ int DirectlyExecutedStatement::execute(EvalState &state)
 			while (ch != '\n')
 			{
 				val += ch;
-				if (ch > '9' || ch < '0') jud = false, cout << "---" << ch << "---" << endl;
+				if (ch > '9' || ch < '0') jud = false;
 				ch = getchar();
 			}
 			if (jud) break;

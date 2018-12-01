@@ -67,7 +67,7 @@ void Program::list()
     int t = Program::getFirstLineNumber();
     while (t != -1)
     {
-        cout << Program::getSourceLine(t);
+        cout << Program::getSourceLine(t) << endl;
         t = Program::getNextLineNumber(t);
     }
 }

@@ -65,7 +65,7 @@ int SequentialStatement::execute(EvalState &state)
             {
             
 				bool jud = true;
-                cout << "?" << endl;
+                cout << " ? " ;
                 char ch = getchar();
                 while (ch != '\n')
                 {
@@ -125,7 +125,7 @@ int DirectlyExecutedStatement::execute(EvalState &state)
 		{
 
 			bool jud = true;
-			cout << "?" << endl;
+			cout << " ? " ;
 			char ch = getchar();
 			while (ch != '\n')
 			{
